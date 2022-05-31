@@ -6,10 +6,12 @@
 
 ## 📃 License | 開開源證書
 **This project is under GPLv3.**
+
 **該插件使用 GPL-3.0 開源證書**
 
 ## 🔴 Precautions | 注意事項
 **The preceding plugins are InteractiveChat and PlaceholderAPI**
+
 **InteractiveChat與PlaceholderAPI為其前置插件**
 
 
