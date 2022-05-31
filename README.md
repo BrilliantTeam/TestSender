@@ -6,3 +6,6 @@
 
 ## 📃 License
 **This project is under GPLv3.**
+
+## 🔴 Precautions
+**InteractiveChat and PlaceholderAPI are pre-plugins**
