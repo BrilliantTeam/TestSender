@@ -1,25 +1,18 @@
 package tech.skyouo.plugins.testsender.listener;
 
 import com.loohp.interactivechat.api.events.InventoryPlaceholderEvent;
-import com.loohp.interactivechat.api.events.ItemPlaceholderEvent;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 
 import java.util.Locale;
-import java.util.Map;
 
 import static tech.skyouo.plugins.testsender.TestSender.jda;
-import static tech.skyouo.plugins.testsender.listener.AuctionListEvent.translateEnchantments;
 
 public class ItemPHEvent {
 

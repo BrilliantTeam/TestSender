@@ -1,8 +1,6 @@
 package tech.skyouo.plugins.testsender.listener;
 
 import com.loohp.interactivechat.api.events.InventoryPlaceholderEvent;
-import com.loohp.interactivechat.api.events.ItemPlaceholderEvent;
-import com.loohp.interactivechat.objectholders.ICPlayer;
 import mineverse.Aust1n46.chat.api.MineverseChatAPI;
 import mineverse.Aust1n46.chat.api.MineverseChatPlayer;
 import mineverse.Aust1n46.chat.channel.ChatChannel;
