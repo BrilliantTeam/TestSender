@@ -17,7 +17,7 @@ jobs:
         with:
           maven-version: 3.8.6
       - name: Build jar
-        run: mvn jar:jar -f pom.xml
+        run: mvn package -f pom.xml
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
