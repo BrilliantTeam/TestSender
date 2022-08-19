@@ -17,13 +17,13 @@ import java.util.regex.Pattern;
 
 public class PlayerChatEvent implements Listener {
     static Pattern p = Pattern.compile(".*(?:買|賣|售|收|購|誰能|誰可|誰給|徵|求|搶|收購).*(?:\\d|一|二|三|四|五|六|七|八|九|十|零|壹|貳|叄|肆|伍|陸|柒|捌|玖|拾)+.+");
-    static Pattern p2 = Pattern.compile(".*(?:\\[i\\]|\\[item\\]|\\[I\\]|\\[Item\\]|\\[ender\\]|\\[Ender\\]|\\[inv\\]|\\[Inv\\])+.*");
+    static Pattern p2 = Pattern.compile(".*(?:\\[i]|\\[item]|\\[I]|\\[Item]|\\[ender]|\\[Ender]|\\[inv]|\\[Inv])+.*");
 
     public static JavaPlugin plugin;
 
     public PlayerChatEvent(JavaPlugin plugin) {
-        this.plugin = plugin;
-    };
+        PlayerChatEvent.plugin = plugin;
+    }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerChatEvent(AsyncPlayerChatEvent e) {

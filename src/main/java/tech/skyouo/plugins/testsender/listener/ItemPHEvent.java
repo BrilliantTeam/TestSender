@@ -24,27 +24,31 @@ import static tech.skyouo.plugins.testsender.listener.AuctionListEvent.translate
 public class ItemPHEvent {
 
     public static void onEventHeld(Player player, ItemStack item) {
-            TextChannel tc = jda.getChannelById(TextChannel.class, "914360488723382352");
-            tc.sendMessage(
-                    String.format(
-                            "<a:R5_RICE:868583772692545638>` %s %s : 展示了 [%d 個 %s] `",
-                            ChatColor.stripColor(PlaceholderAPI.setPlaceholders(player, "%playerTitle_use%")),
-                            player.getDisplayName(),
-                            item.getAmount(),
-                            buildItem(item, player, item.getItemMeta().hasDisplayName())
-                    )
-            ).queue();
+        TextChannel discordChannel = jda.getChannelById(TextChannel.class, "914360488723382352");
+        if (discordChannel == null) return;
+
+        discordChannel.sendMessage(
+                String.format(
+                        "<a:R5_RICE:868583772692545638>` %s %s : 展示了 [%d 個 %s] `",
+                        ChatColor.stripColor(PlaceholderAPI.setPlaceholders(player, "%playerTitle_use%")),
+                        player.getDisplayName(),
+                        item.getAmount(),
+                        buildItem(item, player, item.getItemMeta().hasDisplayName())
+                )
+        ).queue();
     }
 
 
     public static void onInventoryHeld(Player player, InventoryPlaceholderEvent.InventoryPlaceholderType type) {
-        TextChannel tc = jda.getChannelById(TextChannel.class, "914360488723382352");
+        TextChannel discordChannel = jda.getChannelById(TextChannel.class, "914360488723382352");
+
+        if (discordChannel == null) return;
 
         MessageAction action = null;
         switch (type) {
             case INVENTORY:
             case INVENTORY1_UPPER:
-                action = tc.sendMessage(
+                action = discordChannel.sendMessage(
                         String.format(
                                 "<a:R5_RICE:868583772692545638>` %s %s : 展示了 [背包] `",
                                 ChatColor.stripColor(PlaceholderAPI.setPlaceholders(player, "%playerTitle_use%")),
@@ -53,7 +57,7 @@ public class ItemPHEvent {
                 );
                 break;
             case ENDERCHEST:
-                action = tc.sendMessage(
+                action = discordChannel.sendMessage(
                         String.format(
                                 "<a:R5_RICE:868583772692545638>` %s %s : 展示了 [終界箱] `",
                                 ChatColor.stripColor(PlaceholderAPI.setPlaceholders(player, "%playerTitle_use%")),
@@ -62,7 +66,7 @@ public class ItemPHEvent {
                 );
                 break;
             case INVENTORY1_LOWER:
-                action = tc.sendMessage(
+                action = discordChannel.sendMessage(
                         String.format(
                                 "<a:R5_RICE:868583772692545638>` %s %s : 展示了 [物品欄] `",
                                 ChatColor.stripColor(PlaceholderAPI.setPlaceholders(player, "%playerTitle_use%")),

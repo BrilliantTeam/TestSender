@@ -1,5 +1,5 @@
 name: TestSender
 version: '${project.version}'
 main: tech.skyouo.plugins.testsender.TestSender
-api-version: 1.18
+api-version: 1.19
 depend: [PlaceholderAPI, InteractiveChat]

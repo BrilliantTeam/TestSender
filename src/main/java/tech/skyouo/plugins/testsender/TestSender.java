@@ -22,13 +22,7 @@ public final class TestSender extends JavaPlugin {
             jda = JDABuilder.createDefault(
                     new String(Base64.getDecoder().decode("<YOUR TOKEN>"), "UTF-8")
             ).build().awaitReady();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Bukkit.getPluginManager().disablePlugin(this);
-        } catch (LoginException e) {
-            e.printStackTrace();
-            Bukkit.getPluginManager().disablePlugin(this);
-        } catch (UnsupportedEncodingException e) {
+        } catch (InterruptedException | LoginException | UnsupportedEncodingException e) {
             e.printStackTrace();
             Bukkit.getPluginManager().disablePlugin(this);
         }

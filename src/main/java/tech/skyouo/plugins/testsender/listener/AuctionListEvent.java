@@ -22,21 +22,23 @@ import static tech.skyouo.plugins.testsender.TestSender.jda;
 public class AuctionListEvent implements Listener {
     @EventHandler
     public void onAuctionListEvent(studio.trc.bukkit.crazyauctionsplus.api.events.AuctionListEvent e) {
-        if (e.getShopType().getName() != "Buy" && e.getShopType().getName() != "Sell") return;
+        if (!e.getShopType().getName().equals("Buy") && !e.getShopType().getName().equals("Sell")) return;
+
+        TextChannel tradeChannel = jda.getChannelById(TextChannel.class, "967051322144751626");
+        if (tradeChannel == null) return;
 
         if (e.getItem().getType().equals(Material.POTION) || e.getItem().getType().equals(Material.LINGERING_POTION) || e.getItem().getType().equals(Material.SPLASH_POTION) || e.getItem().getType().equals(Material.TIPPED_ARROW)) {
-            onPotionHandler(e);
+            onPotionHandler(e, tradeChannel);
             return;
         }
 
-        TextChannel tc = jda.getChannelById(TextChannel.class, "967051322144751626");
         MessageAction action;
 
         Map<Enchantment, Integer> enchantmentIntegerMap = !e.getItem().getType().equals(Material.ENCHANTED_BOOK) ? e.getItem().getEnchantments() : ((EnchantmentStorageMeta) e.getItem().getItemMeta()).getStoredEnchants();
 
         if (enchantmentIntegerMap.size() == 0) {
-            if (e.getShopType().getName() == "Sell") {
-                action = tc
+            if (e.getShopType().getName().equals("Sell")) {
+                action = tradeChannel
                         .sendMessage(
                                 String.format(
                                         "<a:R0_RICE:868583519948009492>` %s %s 在 出售商場 上架了 %d 個價格為 %.1f 的 %s `",
@@ -48,7 +50,7 @@ public class AuctionListEvent implements Listener {
                                 )
                         );
             } else {
-                action = tc
+                action = tradeChannel
                         .sendMessage(
                                 String.format(
                                         "<a:R0_RICE:868583519948009492>` %s %s 在 收購商場 願意以 %.1f 的價格收購 %d 個 %s `",
@@ -62,8 +64,8 @@ public class AuctionListEvent implements Listener {
             }
         } else {
             if (enchantmentIntegerMap.size() == 1) {
-                if (e.getShopType().getName() == "Sell") {
-                    action = tc
+                if (e.getShopType().getName().equals("Sell")) {
+                    action = tradeChannel
                             .sendMessage(
                                     String.format(
                                             "<a:R0_RICE:868583519948009492>` %s %s 在 出售商場 上架了 %d 個價格為 %.1f 的 %s %s `",
@@ -76,7 +78,7 @@ public class AuctionListEvent implements Listener {
                                     )
                             );
                 } else {
-                    action = tc
+                    action = tradeChannel
                             .sendMessage(
                                     String.format(
                                             "<a:R0_RICE:868583519948009492>` %s %s 在 收購商場 願意以 %.1f 的價格收購 %d 個 %s %s `",
@@ -90,8 +92,8 @@ public class AuctionListEvent implements Listener {
                             );
                 }
             } else {
-                if (e.getShopType().getName() == "Sell") {
-                    action = tc
+                if (e.getShopType().getName().equals("Sell")) {
+                    action = tradeChannel
                             .sendMessage(
                                     String.format(
                                             "<a:R0_RICE:868583519948009492>` %s %s 在 出售商場 上架了 %d 個價格為 %.1f 的 %s 的 %s `",
@@ -104,7 +106,7 @@ public class AuctionListEvent implements Listener {
                                     )
                             );
                 } else {
-                    action = tc
+                    action = tradeChannel
                             .sendMessage(
                                     String.format(
                                             "<a:R0_RICE:868583519948009492>` %s %s 在 收購商場 願意以 %.1f 的價格收購 %d 個 %s 的 %s `",
@@ -126,6 +128,7 @@ public class AuctionListEvent implements Listener {
     protected static String translateEnchantments(Player player, ItemStack itemStack) {
         Map<Enchantment, Integer> enchantmentIntegerMap = !itemStack.getType().equals(Material.ENCHANTED_BOOK) ? itemStack.getEnchantments() : ((EnchantmentStorageMeta) itemStack.getItemMeta()).getStoredEnchants();
         StringJoiner stringJoiner = new StringJoiner(" 及 ");
+
         for (Enchantment e : enchantmentIntegerMap.keySet()) {
             stringJoiner.add(
                     PlaceholderAPI.setPlaceholders(player, "等級%locale_level." + enchantmentIntegerMap.get(e) + "% %locale_" + e.getKey().getKey() + "%")
@@ -135,16 +138,15 @@ public class AuctionListEvent implements Listener {
         return stringJoiner.toString();
     }
 
-    private void onPotionHandler(studio.trc.bukkit.crazyauctionsplus.api.events.AuctionListEvent e) {
+    private void onPotionHandler(studio.trc.bukkit.crazyauctionsplus.api.events.AuctionListEvent e, TextChannel tradeChannel) {
         PotionMeta meta = (PotionMeta) e.getItem().getItemMeta();
+        if (meta == null) return;
         String key = "item.minecraft." + e.getItem().getType().toString().toLowerCase(Locale.ROOT) + ".effect." + meta.getBasePotionData().getType().toString().toLowerCase(Locale.ROOT);
-
-        TextChannel tc = jda.getChannelById(TextChannel.class, "967051322144751626");
 
         MessageAction action;
 
-        if (e.getShopType().getName() == "Sell") {
-            action = tc
+        if (e.getShopType().getName().equals("Sell")) {
+            action = tradeChannel
                     .sendMessage(
                             String.format(
                                     "<a:R0_RICE:868583519948009492>` %s %s 在 出售商場 上架了 %d 個價格為 %.1f 的 %s `",
@@ -156,7 +158,7 @@ public class AuctionListEvent implements Listener {
                             )
                     );
         } else {
-            action = tc
+            action = tradeChannel
                     .sendMessage(
                             String.format(
                                     "<a:R0_RICE:868583519948009492>` %s %s 在 收購商場 願意以 %.1f 的價格收購 %d 個 %s `",
