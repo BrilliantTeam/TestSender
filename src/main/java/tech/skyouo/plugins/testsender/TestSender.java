@@ -5,11 +5,10 @@ import net.dv8tion.jda.api.JDABuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import tech.skyouo.plugins.testsender.listener.AuctionListEvent;
-import tech.skyouo.plugins.testsender.listener.ItemPHEvent;
 import tech.skyouo.plugins.testsender.listener.PlayerChatEvent;
 
 import javax.security.auth.login.LoginException;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public final class TestSender extends JavaPlugin {
@@ -20,15 +19,9 @@ public final class TestSender extends JavaPlugin {
         // Plugin startup logic
         try {
             jda = JDABuilder.createDefault(
-                    new String(Base64.getDecoder().decode("<YOUR TOKEN>"), "UTF-8")
+                    new String(Base64.getDecoder().decode("<YOUR TOKEN>"), StandardCharsets.UTF_8)
             ).build().awaitReady();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Bukkit.getPluginManager().disablePlugin(this);
-        } catch (LoginException e) {
-            e.printStackTrace();
-            Bukkit.getPluginManager().disablePlugin(this);
-        } catch (UnsupportedEncodingException e) {
+        } catch (InterruptedException | LoginException e) {
             e.printStackTrace();
             Bukkit.getPluginManager().disablePlugin(this);
         }
