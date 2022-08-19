@@ -84,7 +84,15 @@ public class ItemPHEvent {
     }
 
     private static String buildItem(ItemStack itemStack, Player player, boolean hasCustomName) {
-        return ChatColor.stripColor(hasCustomName ? (itemStack.getItemMeta().getDisplayName() + " (" + PlaceholderAPI.setPlaceholders(player, "%locale_" + itemId(itemStack) + "%") + ")") : PlaceholderAPI.setPlaceholders(player, "%locale_" + itemId(itemStack) + "%"));
+        String name;
+
+        if (hasCustomName) {
+            name = itemStack.getItemMeta().getDisplayName() + " (" + PlaceholderAPI.setPlaceholders(player, "%locale_" + itemId(itemStack) + "%") + ")";
+        } else {
+            name = PlaceholderAPI.setPlaceholders(player, "%locale_" + itemId(itemStack) + "%");
+        }
+
+        return ChatColor.stripColor(name);
     }
 
     private static String itemId(ItemStack item) {
